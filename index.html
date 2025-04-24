@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Кофейня от Марата | Заказ кофе</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      background: #f4f1ee url('https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #3e2e1c;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.95);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 64px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+
+    .button, select {
+      background-color: #8b5e3c;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    select {
+      background-color: #8b5e3c;
+      width: 260px;
+      text-align: center;
+      appearance: none;
+    }
+
+    .button:hover, select:hover {
+      background-color: #a86d47;
+    }
+
+    .hidden {
+      opacity: 0;
+      height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 0.8s ease, height 0.5s ease;
+    }
+
+    .visible {
+      opacity: 1;
+      height: auto;
+      pointer-events: auto;
+      transition: opacity 0.8s ease, height 0.5s ease;
+    }
+
+    /* Модальное окно с GIF */
+    .modal {
+      display: flex;
+      opacity: 0;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .modal.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background-image: url('https://media1.tenor.com/m/t3ULb2Og0xMAAAAC/coffee.gif');
+      background-size: cover;
+      background-position: center;
+      width: 90%;
+      max-width: 500px;
+      padding: 60px 20px;
+      border-radius: 10px;
+      color: white;
+      text-shadow: 0 0 5px black;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <h1>Кофей от Марата</h1>
+    <p>Насладитесь насыщенным вкусом кофе — выберите напиток и получите его от нашего бариста Марата!</p>
+
+    <button class="button" onclick="showCoffeeOptions()">Заказать кофе</button>
+
+    <select id="coffeeSelect" class="hidden" onchange="showSizeOptions()">
+      <option disabled selected>Выберите кофе</option>
+      <option>Латте</option>
+      <option>Латте с мёдом</option>
+      <option>Капучино</option>
+      <option>Капучино Стронг</option>
+      <option>Американо</option>
+      <option>Экспрессо</option>
+    </select>
+
+    <select id="sizeSelect" class="hidden" onchange="showThankYou()">
+      <option disabled selected>Выберите объем</option>
+      <option>200 мл</option>
+      <option>300 мл</option>
+      <option>400 мл</option>
+    </select>
+  </div>
+
+  <!-- Модальное уведомление -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      Благодарим за заказ, ваш кофе будет готов<br>в течение 5 минут<br>нашим бариста Маратом!
+    </div>
+  </div>
+
+  <script>
+    function showCoffeeOptions() {
+      const coffeeSelect = document.getElementById('coffeeSelect');
+      coffeeSelect.classList.remove('hidden');
+      coffeeSelect.classList.add('visible');
+    }
+
+    function showSizeOptions() {
+      const sizeSelect = document.getElementById('sizeSelect');
+      sizeSelect.classList.remove('hidden');
+	  sizeSelect.classList.add('visible');
+    }
+
+    function showThankYou() {
+      const modal = document.getElementById('modal');
+      modal.classList.add('show');
+
+      // Скрыть через 5 секунд
+      setTimeout(() => {
+        modal.classList.remove('show');
+        resetForm();
+      }, 5000);
+    }
+
+    function resetForm() {
+      document.getElementById('coffeeSelect').classList.remove('visible');
+      document.getElementById('coffeeSelect').classList.add('hidden');
+      document.getElementById('sizeSelect').classList.remove('visible');
+      document.getElementById('sizeSelect').classList.add('hidden');
+      document.getElementById('coffeeSelect').selectedIndex = 0;
+      document.getElementById('sizeSelect').selectedIndex = 0;
+    }
+  </script>
+
+</body>
+</html>
